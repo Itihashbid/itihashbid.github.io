@@ -74,50 +74,9 @@
         <h2 class="headline">সাম্প্রতিক প্রতিবেদন</h2>
         <span class="rule"></span>
       </div>
-      <div class="card-grid">
-
-        <a href="article.html" class="card" style="text-decoration:none;">
-  <div class="card-img"><span class="card-badge">প্রাচীন সভ্যতা</span></div>
-  <div class="card-body">
-    <span class="cat">প্রত্নতত্ত্ব</span>
-    <h3 class="headline">মহাস্থানগড়ে খননে মিলল নতুন প্রত্নসামগ্রী</h3>
-    <p>প্রাচীন পুণ্ড্রনগরের ধ্বংসাবশেষে প্রত্নতাত্ত্বিকরা খুঁজে পেয়েছেন মৌর্য যুগের মুদ্রা ও শিলালিপি।</p>
-    <div class="meta">লিখেছেন সালমান বাঙালি · ৩ ঘণ্টা আগে</div>
-  </div>
-      </a>
-
-        <a href="article-2.html" class="card" style="text-decoration:none;">
-  <div class="card-img"><span class="card-badge">বিশ্ব ইতিহাস</span></div>
-  <div class="card-body">
-    <span class="cat">সভ্যতা</span>
-    <h3 class="headline">মেসোপটেমিয়া: লেখার প্রথম উদ্ভাবনের গল্প</h3>
-    <p>কিউনিফর্ম লিপির উৎপত্তি ও সুমেরীয় সভ্যতার প্রশাসনিক ব্যবস্থা নিয়ে বিস্তারিত বিশ্লেষণ।</p>
-    <div class="meta">লিখেছেন সালমান বাঙালি · ৫ ঘণ্টা আগে</div>
-  </div>
-</a>
-
-        <a href="article-3.html" class="card" style="text-decoration:none;">
-          <div class="card-img"><span class="card-badge">ঔপনিবেশিক কাল</span></div>
-          <div class="card-body">
-            <span class="cat">অর্থনীতি</span>
-            <h3 class="headline">বাংলার মসলিন বাণিজ্য কীভাবে ধ্বংস হলো</h3>
-            <p>ইস্ট ইন্ডিয়া কোম্পানির নীতি কীভাবে বাংলার বস্ত্রশিল্পকে পঙ্গু করে দিয়েছিল, তার পূর্ণাঙ্গ বিবরণ।</p>
-            <div class="meta">লিখেছেন সালমান বাঙালি · ১ দিন আগে</div>
-          </div>
-        </a>
-
-       
-        <a href="article-4.html" class="card" style="text-decoration:none;">
-             <div class="card-img"><span class="card-badge">মধ্যযুগ</span></div>
-          <div class="card-body">
-            <span class="cat">শাসনব্যবস্থা</span>
-            <h3 class="headline">সুবাহ বাংলা: এক সমৃদ্ধ প্রদেশের উত্থান</h3>
-            <p>ঢাকা প্রতিষ্ঠা থেকে শুরু করে বাংলার প্রশাসনিক কাঠামোর বিবর্তন নিয়ে বিশ্লেষণ।</p>
-            <div class="meta">লিখেছেন সালমান বাঙালি · ২ দিন আগে</div>
-          </div>
-        </a>
-
-      </div>
+     <div class="card-grid" id="dynamicArticles">
+  <p style="color:var(--slate); font-size:13.5px;">লোড হচ্ছে...</p>
+</div>
     </div>
 
     <aside class="sidebar-col">
@@ -180,5 +139,49 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script type="module">
+  import { db } from "./firebase-config.js";
+  import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  async function loadDynamicArticles(){
+    const container = document.getElementById('dynamicArticles');
+    try{
+      const q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
+      const snapshot = await getDocs(q);
+
+      if(snapshot.empty){
+        container.innerHTML = "<p style='color:var(--slate); font-size:13.5px;'>এখনো কোনো প্রতিবেদন যোগ করা হয়নি।</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+      snapshot.forEach(docSnap => {
+        const art = docSnap.data();
+        const card = document.createElement('a');
+        card.href = `read.html?id=${docSnap.id}`;
+        card.className = "card";
+        card.style.textDecoration = "none";
+        const imgStyle = art.image ? `style="background-image:url('${art.image}'); background-size:cover; background-position:center;"` : '';
+card.innerHTML = `
+  <div class="card-img" ${imgStyle}><span class="card-badge">${art.badge}</span></div>
+  <div class="card-body">
+            <span class="cat">${art.cat}</span>
+            <h3 class="headline">${art.title}</h3>
+            <p>${art.desc}</p>
+            <div class="meta">লিখেছেন ${art.author}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    } catch(err){
+      container.innerHTML = "<p style='color:var(--slate); font-size:13.5px;'>লোড করতে সমস্যা হয়েছে।</p>";
+    }
+  }
+
+  loadDynamicArticles();
+</script>
+
 </body>
 </html>
+

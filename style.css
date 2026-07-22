@@ -308,3 +308,82 @@ body.dark-mode .empty-state{ background:#1A2540; border-color:#2E3E5E; color:#88
 .social-links a:hover{
   transform:translateY(-5px) scale(1.1);
 }
+
+/* ---------- Article action bar (like + share) ---------- */
+.article-actions{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 0;
+  margin-bottom:20px;
+  border-bottom:1px solid #DACBA0;
+}
+
+#likeBtn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+  border:1px solid #DFCE9E;
+  color:#221B12;
+  font-family:'Hind Siliguri', sans-serif;
+  font-size:14px;
+  font-weight:600;
+  padding:10px 18px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:.2s;
+}
+#likeBtn:hover{
+  border-color:#B9803F;
+  background:#FBF6E9;
+}
+#likeBtn .heart{
+  font-size:16px;
+  transition:.2s;
+  filter:grayscale(1);
+  opacity:.55;
+}
+#likeBtn.liked{
+  background:#16233D;
+  border-color:#16233D;
+  color:#F3ECDA;
+}
+#likeBtn.liked .heart{
+  filter:none;
+  opacity:1;
+  transform:scale(1.15);
+}
+
+#shareBtn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#16233D;
+  border:1px solid #16233D;
+  color:#F3ECDA;
+  font-family:'Hind Siliguri', sans-serif;
+  font-size:14px;
+  font-weight:600;
+  padding:10px 20px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:.2s;
+}
+#shareBtn:hover{
+  background:#1E304F;
+  transform:translateY(-1px);
+}
+#shareBtn:active{
+  transform:translateY(0);
+}
+#shareBtn .icon{
+  width:16px;
+  height:16px;
+  flex-shrink:0;
+}
+
+@media (max-width:480px){
+  .article-actions{ gap:10px; }
+  #likeBtn, #shareBtn{ padding:9px 15px; font-size:13px; }
+}

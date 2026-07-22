@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অ্যাডমিন প্যানেল — ইতিহাসবিদ</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- লগইন বক্স -->
+  <div class="admin-login-wrap" id="loginSection">
+    <div class="admin-login-box">
+      <div class="admin-login-header">
+        <div class="emblem" style="margin:0 auto 14px;">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#D9A85F" stroke-width="1.3"/><path d="M12 3.5V6M12 18v2.5M3.5 12H6M18 12h2.5" stroke="#D9A85F" stroke-width="1.3"/><circle cx="12" cy="12" r="2" fill="#D9A85F"/></svg>
+        </div>
+        <h1 class="headline">অ্যাডমিন লগইন</h1>
+      </div>
+      <input type="email" id="emailInput" placeholder="ইমেইল">
+      <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড">
+      <button id="loginBtn">লগইন করুন</button>
+      <p id="loginError" class="admin-error"></p>
+    </div>
+  </div>
+
+  <!-- অ্যাডমিন প্যানেল (লগইনের পর দেখাবে) -->
+  <div class="admin-panel" id="panelSection" style="display:none;">
+    <header class="admin-header">
+      <div class="admin-header-brand">
+        <span class="headline">ইতিহাসবিদ অ্যাডমিন প্যানেল</span>
+      </div>
+      <button id="logoutBtn" class="admin-logout-btn">লগআউট</button>
+    </header>
+
+    <div class="admin-content">
+  <div class="admin-tabs">
+    <button class="tab-btn active" data-tab="add">নতুন আর্টিকেল</button>
+    <button class="tab-btn" data-tab="list">সব আর্টিকেল</button>
+  </div>
+
+ <!-- আর্টিকেল যোগ করার ফর্ম -->
+  <div class="tab-content" id="tab-add">
+    <h2 class="headline">নতুন আর্টিকেল যোগ করুন</h2>
+    <form id="articleForm" class="admin-form">
+      <label>শিরোনাম</label>
+      <input type="text" id="artTitle" required>
+
+      <label>ছবির লিংক (Image URL)</label>
+      <input type="url" id="artImage" placeholder="https://... (imgur.com বা অন্য কোথাও আপলোড করে লিংক বসাও)">
+
+      <label>বিভাগ (যেমন: প্রত্নতত্ত্ব, সভ্যতা)</label>
+      <input type="text" id="artCat" required>
+
+      <label>সংক্ষিপ্ত বিবরণ (Description)</label>
+      <textarea id="artDesc" rows="2" required></textarea>
+
+      <label>ব্যাজ (যেমন: প্রাচীন সভ্যতা, মধ্যযুগ)</label>
+      <input type="text" id="artBadge" required>
+
+      <label>লেখকের নাম</label>
+      <input type="text" id="artAuthor" value="সালমান বাঙালি" required>
+
+      <label>পুরো আর্টিকেলের লেখা (প্রতিটা প্যারাগ্রাফ নতুন লাইনে লিখো)</label>
+      <textarea id="artBody" rows="10" required></textarea>
+
+      <button type="submit">আর্টিকেল প্রকাশ করুন</button>
+      <p id="formMsg" class="admin-error"></p>
+    </form>
+  </div>
+
+  <!-- আর্টিকেলের লিস্ট -->
+  <div class="tab-content" id="tab-list" style="display:none;">
+    <h2 class="headline">সব আর্টিকেল</h2>
+    <div id="articlesList"></div>
+  </div>
+</div>
+  </div>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

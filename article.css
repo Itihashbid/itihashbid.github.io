@@ -23,3 +23,106 @@
   .article-body-wrap{ grid-template-columns:1fr; }
   .article-header h1{ font-size:24px; }
 }
+
+.article-cover[style*="background-image"]{
+  background-color: #1a2540;
+  background-repeat: no-repeat;
+}
+
+
+/* ===========================
+   Article Actions
+=========================== */
+
+.article-actions{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin:26px 0 30px;
+    padding-bottom:22px;
+    border-bottom:1px solid #dacba0;
+}
+
+.article-actions button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:12px 22px;
+
+    border:none;
+    border-radius:999px;
+
+    cursor:pointer;
+
+    font-family:'Hind Siliguri',sans-serif;
+    font-size:15px;
+    font-weight:600;
+
+    transition:.3s ease;
+}
+
+/* Like Button */
+
+#likeBtn{
+    background:#ffffff;
+    color:var(--ink);
+    border:1px solid #dacba0;
+}
+
+#likeBtn:hover{
+    background:#f8f3e8;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+#likeBtn .heart{
+    font-size:20px;
+    filter:grayscale(100%);
+    transition:.3s;
+}
+
+#likeBtn.liked{
+    background:#fff4f4;
+    color:#b32025;
+    border-color:#d98b8b;
+}
+
+#likeBtn.liked .heart{
+    filter:none;
+    transform:scale(1.25);
+}
+
+/* Share Button */
+
+#shareBtn{
+    background:var(--navy);
+    color:#fff;
+}
+
+#shareBtn:hover{
+    background:#24365f;
+    transform:translateY(-2px);
+    box-shadow:0 10px 22px rgba(19,35,67,.35);
+}
+
+#shareBtn .icon{
+    width:18px;
+    height:18px;
+}
+
+/* Mobile */
+
+@media (max-width:600px){
+
+.article-actions{
+    flex-direction:column;
+    align-items:stretch;
+}
+
+.article-actions button{
+    width:100%;
+}
+
+}
